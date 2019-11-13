@@ -463,6 +463,15 @@ Array.prototype.forEach.call(buttons, button => {
   <small><a href="#tabla-de-contenido">🡡 volver al inicio</a></small>
 </div>
 
+nota: otra forma de convertir un nodeList en un array podria ser usando spreadOperator:
+```const buttons = document.getElementsByClassName('call-to-action');
+
+    [...buttons].forEach(button => {
+      button.onclick = () => {
+        alert('no pares de aprender')
+      }
+    });
+```
 ## Prototype
 
 Si hay un temaque hace que a todos los desarrolladores de javascript nos explote la cabeza de lo dificíl que es, es este: **Prototype** es un concepto casi único de javascript que se aparte de como normalmente manejamos lenguajes y objetos en lenguajes de programación, las clases son como un plano en Java lo escribimos y luego insanciamos objetos, si queremos crear una clase que hereda de otra clase y volvemos a instanciar otros objetos, pero en javascript todos son objetos.
