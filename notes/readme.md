@@ -859,7 +859,8 @@ melindron.mostrarHabilidad()
         
 // Tambien existen otros keywords como 'class' que nos ayudan a ahorrar muchas lineas de código y que éste tenga una sintaxis clara. Sin embargo, no hay que perder de vista que solo es un wrapper a los prototype...
 
-// Esta es la evolución de JS```
+// Esta es la evolución de JS
+```
 
 ## Herencia Prototipal
 
