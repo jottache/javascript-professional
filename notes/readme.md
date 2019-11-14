@@ -6,6 +6,7 @@
 - [¿Como llegá un script al navegador?](#como-llegá-un-script-al-navegador)
 - [Scope](#scope)
 - [Clouseres](#clouseres)
+- [creando un plugin](#creando-un-plugin)
 - [¿Quién es This?](#quién-es-this)
 - [Métodos Call y Apply](#métodos-call-y-apply)
   - [Evitar confundir Apply y Call](#evitar-confundir-apply-y-call)
@@ -196,7 +197,7 @@ counter.count = 99;
 ## creando un plugin
 
 para crear un plugin creamos una funcion vacia a la que vamos a pasarle un metodo con prototype. este metodo sera una funcion que tiene dentro cierta logica. luego esta funcion vacia se la pasamos por parametros a la clase donde vamos a recibir el plugin.
-```
+```js
 function AutoPlay() {} 
 AutoPlay.prototype.run = function(video) { 
   video.mute()
@@ -699,7 +700,8 @@ Hoy en dia hay nuevas formas de hacerlo, usando el keyword class internamente, d
 </div>
 
 otra manera de explicar todo esto:
-```// Crear un objeto común y corriente
+```js
+// Crear un objeto común y corriente
 const goku = {
 nombre: 'Son Goku'
 }
@@ -1389,7 +1391,7 @@ Uno de los features modernos que trae javascript son getters y setters, son func
 
 Enlaza la propiedad de un objeto con una función que será llamada cuando la propiedad es buscada.
 A veces es deseable permitir acceso a una propiedad que retorna un valor dinámicamente calculado, o si desea mostrar el estado de alguna variable interna sin requerir el uso de llamadas a métodos explícitos. En JavaScript, esto se puede lograr con el uso de un getter (captador). No es posible tener simultáneamente un getter ligado a una propiedad y que dicha propiedad tenga actualmente un valor, aunque es posible usar un getter junto con un setter para crear un tipo de pseudo-propiedad:
-```
+```js
 let o = {
   get latest () {
     if (this.log.length > 0) {
@@ -1407,7 +1409,7 @@ let o = {
 
 La sintaxis set enlaza la propiedad de un objeto con una función que será llamada cada vez que se le asigne un valor.
 
-```
+```js
 let historial = {
   set actual(mensaje) {
     this.log.push(mensaje);
