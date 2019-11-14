@@ -1348,7 +1348,41 @@ Ya vimos como el event loop procesa las promesas, ahora vamos a volver a las pro
 
 Uno de los features modernos que trae javascript son getters y setters, son funciones que podemos utilizar dentro de objetos que nos permiten tener propiedades virtuales, es decir no es una propiedad que existe directamente en el objeto, pero atravez de un getter o setter podemos correr una fución que va ha calcular estos valores o va a mostrar una valor para establecer esté nuevo valor.
 
-Los getters los vamos a escribir usando el keyword get seguido de la propiedad virtual 
+<strong>Getter</strong>
+
+Enlaza la propiedad de un objeto con una función que será llamada cuando la propiedad es buscada.
+A veces es deseable permitir acceso a una propiedad que retorna un valor dinámicamente calculado, o si desea mostrar el estado de alguna variable interna sin requerir el uso de llamadas a métodos explícitos. En JavaScript, esto se puede lograr con el uso de un getter (captador). No es posible tener simultáneamente un getter ligado a una propiedad y que dicha propiedad tenga actualmente un valor, aunque es posible usar un getter junto con un setter para crear un tipo de pseudo-propiedad:
+```let o = {
+  get latest () {
+    if (this.log.length > 0) {
+      return this.log[this.log.length - 1];
+    }
+    else {
+      return null;
+    }
+  },
+  log: []
+}```
+
+<strong>setter</strong>
+
+La sintaxis set enlaza la propiedad de un objeto con una función que será llamada cada vez que se le asigne un valor.
+
+```let historial = {
+  set actual(mensaje) {
+    this.log.push(mensaje);
+  },
+  log: []
+}
+historial.actual='mensaje 1';
+console.log(historial.log) //['mensaje 1']
+
+historial.actual='mensaje 2';
+console.log(historial.log)//['mensaje 1', 'mensaje 2']```
+
+En JavaScript, un setter puede ser usado para ejecutar una función para una propiedad especifica que será ejecutada al cambiar el valor. Los setters se suelen usar con getters para crear un tipo de pseudo-propiedad.
+
+ejemplos completo:
 
 ```js
 let persona = {
@@ -1367,6 +1401,40 @@ persona.nombreCompleto = 'Camilo Sanchez'
 
 console.log(persona.nombre); //camilo
 console.log(persona.apellido); //sanchez
+
+//o como ejemplo en los plugins que hemos usado:
+function MediaPlayer(config) {
+  this.media = config.el;
+  this.plugins = config.plugins || [];
+
+  this._initPlugins();
+}
+
+function AutoPlay() {} 
+AutoPlay.prototype.run = function(player) {
+  if (!player.muted){
+    player.muted = true
+  }
+  player.play()
+};
+
+MediaPlayer.prototype._initPlugins = function() {
+  const player = {
+    play: ()=> this.play(),
+    pause: ()=> this.pause(),
+    media: this.media,
+    get muted(){
+      return this.media.muted
+    },
+    set muted(value){
+      this.media.muted = value
+    }
+    
+  }
+  this.plugins.forEach(plugin => {
+    plugin.run(player);
+  });
+};
 ```
 <br>
 
