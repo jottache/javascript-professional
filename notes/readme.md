@@ -1352,7 +1352,8 @@ Uno de los features modernos que trae javascript son getters y setters, son func
 
 Enlaza la propiedad de un objeto con una función que será llamada cuando la propiedad es buscada.
 A veces es deseable permitir acceso a una propiedad que retorna un valor dinámicamente calculado, o si desea mostrar el estado de alguna variable interna sin requerir el uso de llamadas a métodos explícitos. En JavaScript, esto se puede lograr con el uso de un getter (captador). No es posible tener simultáneamente un getter ligado a una propiedad y que dicha propiedad tenga actualmente un valor, aunque es posible usar un getter junto con un setter para crear un tipo de pseudo-propiedad:
-```let o = {
+```
+let o = {
   get latest () {
     if (this.log.length > 0) {
       return this.log[this.log.length - 1];
@@ -1362,13 +1363,15 @@ A veces es deseable permitir acceso a una propiedad que retorna un valor dinámi
     }
   },
   log: []
-}```
+}
+```
 
 <strong>setter</strong>
 
 La sintaxis set enlaza la propiedad de un objeto con una función que será llamada cada vez que se le asigne un valor.
 
-```let historial = {
+```
+let historial = {
   set actual(mensaje) {
     this.log.push(mensaje);
   },
@@ -1378,7 +1381,8 @@ historial.actual='mensaje 1';
 console.log(historial.log) //['mensaje 1']
 
 historial.actual='mensaje 2';
-console.log(historial.log)//['mensaje 1', 'mensaje 2']```
+console.log(historial.log)//['mensaje 1', 'mensaje 2']
+```
 
 En JavaScript, un setter puede ser usado para ejecutar una función para una propiedad especifica que será ejecutada al cambiar el valor. Los setters se suelen usar con getters para crear un tipo de pseudo-propiedad.
 
