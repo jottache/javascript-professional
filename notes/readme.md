@@ -193,6 +193,43 @@ counter.count = 99;
   <small><a href="#tabla-de-contenido">🡡 volver al inicio</a></small>
 </div>
 
+## creando un plugin
+
+para crear un plugin creamos una funcion vacia a la que vamos a pasarle un metodo con prototype. este metodo sera una funcion que tiene dentro cierta logica. luego esta funcion vacia se la pasamos por parametros a la clase donde vamos a recibir el plugin.
+```
+function AutoPlay() {} 
+AutoPlay.prototype.run = function(video) { 
+  video.mute()
+  video.play();
+};
+
+//en la clase se le llegaran los plugins por parametros:
+function MediaPlayer(config) {
+  this.media = config.el;
+  this.plugins = config.plugins || [];
+
+  this._initPlugins(); //metodo que corre los plugin
+}
+
+//creamos el metodo para que corran los plugins
+MediaPlayer.prototype._initPlugins = function() {
+this.plugins.forEach(plugin => {
+    plugin.run(player);
+  });
+};
+
+//instanciamos la clase y le pasamos por parametros el video y los plugins por un array (por si son mas de uno)
+const video = document.querySelector('video'); 
+const player = new MediaPlayer({  
+  el: video,
+  plugins: [
+    new AutoPlay()  //aqui llamamos al plugin para que funcione de una vez
+  ],
+});
+
+//todo esto hara que el video corra apenas abrimos la pagina, en muted por supuesto.
+```
+
 ## ¿Quién es This?
 
 This se refiere a un objeto. Ese objeto es el que actualmente está ejecutando un pedazó de código.
