@@ -1183,6 +1183,11 @@ SpiderMonkey tiene 2 capas de optimización, Chakra también y recibe informaci�
 
 Mientras que en chrome nuestro programa empieza a ejecutarse rápido y quizas toma un poco más de tiempo en que se optmize pero así es como funcionan los motores de javascript.
 
+Si queremos aprovechar al máximo las bondades de los motores de Javascript debemos preocuparnos por:
+Las funciones reciban los mismos tipos de datos
+Los tipos de datos que contengan estructuras (Arreglos y Objectos) mantengan la misma forma estructural.
+De esa forma el motor de Javascript podrá optimizar el código que se ejecuta constantemente enviándolo de ByteCode a OptimizedCode
+
 <div align="right">
   <small><a href="#tabla-de-contenido">🡡 volver al inicio</a></small>
 </div>
