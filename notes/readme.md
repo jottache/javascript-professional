@@ -1636,7 +1636,7 @@ Los generadores son funciones especiales cuya ejecución podemos comenzar y dete
 
 ## Como cancelar peticiones Fetch
 
-La peticiones [AJAX]() permitieron en su tiempo hacer peticiones asíncronas al servidor sin tener que detener la carga de la página. Hoy en día se utiliza la función fetch para esto.
+La peticiones [AJAX]() permitieron en su tiempo hacer peticiones asíncronas al servidor sin tener que detener la carga de la página. Hoy en día se utiliza la función fetch para esto. chrome nos permite simular una conexion lenta de internet, en la pestaña que dice "no trottling" podemos elegirn entre un 3G fast o un 3G slow
 
 Con fetch tenemos algo llamado AbortController que nos permite enviar una señal a una petición en plena ejecución para detenerla.
 
@@ -1665,7 +1665,7 @@ const url =
       const img = document.getElementById('huge-image');
       const loadButton = document.getElementById('load');
       const stopButton = document.getElementById('stop');
-      let controller;
+      let controller; //aqui definimos una constante vacia que luego vamos a agregarle la clase AbortController()
 
       // Función que habilita o desabilita un boton
       function startLoading() {
@@ -1697,12 +1697,14 @@ const url =
           const response = await fetch(url, { signal: controller.signal });
           // Vamos a obtener el binario de la imagen con blob img en forma binaria
           const blob = await response.blob();
-          // Convertimos el blob binario a una URL, el navegador se encarga de asignar el blob una url
+          //no le podemos pasar este binario directamente a la imagen, tenemos que convertirlos en url
+          // Convertimos el blob binario a una URL, el navegador de convertir ese blob, le va a asignar un url y te la va dar
+          //esa url ya se la podemos asignar a la imagen
           const imgUrl = URL.createObjectURL(blob);
           // Ahora el src se lo asignamos a la url de la imagen
           img.src = imgUrl;
         } catch (error) {
-          console.log(error.message);
+          console.log(error.message); //cancelar una promesa devuelve un error.. con catch podemos manejarlo para informarlo
         }
 
         // Cuando la función asincrona se falle vamos a cambiar el boton a stop
@@ -1793,14 +1795,13 @@ Cuando el elemento target encuentra un threshold especificado por el Intersectio
 ```js
 var callback = function(entries, observer) { 
   entries.forEach(entry => {
-    // Cada entry describe un cambio en la intersección para
-    // un elemento observado
+    // Cada entry describe un cambio en la intersección para un elemento observado
     //   entry.boundingClientRect
-    //   entry.intersectionRatio
+    //   entry.intersectionRatio = define el porcentajo en el que se encuentra siendo observado
     //   entry.intersectionRect
-    //   entry.isIntersecting
+    //   entry.isIntersecting = defino si el objeto esta intersectado o no
     //   entry.rootBounds
-    //   entry.target
+    //   entry.target = defino que objeto esta siendo itersectado
     //   entry.time
   });
 };
@@ -1824,9 +1825,9 @@ class AutoPause {
   }
   run(player) {
     this.player = player;
-    // const observer = new IntersectionObserver(handler, config)
+    // const observer = new IntersectionObserver(funcion que se ejecutara,objeto de configuracion)
     const observer = new IntersectionObserver(this.handlerIntersection, {
-      // threshold: umbral define que porciento del elemento tiene que tener interseccion
+      // threshold: umbral define que porcentaje del elemento tiene que tener interseccion
       threshold: this.threshold
     })
 
@@ -1834,13 +1835,15 @@ class AutoPause {
   }
   // Cuando intersectionObserver llame a handlerIntersection le va a pasar una lista de entries
   // los entries son todos los objetos que estamos observando 
-  handlerIntersection(entries) {
-    const entry = entries[0];
+  handlerIntersection = (entries) => {
+    const entry = entries[0]; //en este caso solo es uno asi que le pasamos la posicion 0
     console.log(entry);
 
-    const isVisible = entry.intersectionRatio >= this.threshold
+    //aqui usamos la propiedad intersectionRatio y le decimos que 
+    //si es mayor o igual al threshold que le definimos entonces entra en la variable como true, sino false
+   const isVisible = entry.intersectionRatio >= this.threshold 
 
-    if (isVisible) {
+    if (isVisible) { //si es true le dara play, sino, le dara pause
       this.player.play();
     } else {
       this.player.pause();
@@ -1849,6 +1852,7 @@ class AutoPause {
 }
 export default AutoPause;
 ```
+
 <br>
 <div align="right">
   <small><a href="#tabla-de-contenido">🡡 volver al inicio</a></small>
@@ -1863,6 +1867,9 @@ El documento DOM ahora tiene un elemento que podemos escuchar.
 document.addEventListener('visibilitychange', () => {
   console.log(document.visibilityState);
 })
+//si cambiamos de pestaña o nos salimos del DOM el visibilityState sera hidden y cuando volvemos sera visible
+visibilityState = hidden
+visibilityState = visible
 ```
 
 Usando este evento nosotros podemos salirnos del navegador, también podemos cambiar de pestaña y el DOM lo sabrá. Usemos esto en nuestro plugin para que cuando cambiemos de tab el video se detenga. En el método run es cuando los plugins se echan a correr, aquí es un buen momento, para conectarnos a este evento y que cuando suceda tomar acción.
@@ -1939,7 +1946,7 @@ self.addEventListener('fetch', event => {
     return;
   
   // actualizar el cache
-  event.waitUntil(updateCache(cache))
+  event.waitUntil(updateCache(request))
 
   
   // Buscamos en el cache
@@ -1991,10 +1998,14 @@ async function cachedResponse(request) {
 
 async function updateCache(request) {
   const cache = await caches.open("v1");
+  //luego buscamos una copia actualizada
   const response = await fetch(request);
+  //luego le hacemos un put(actualizar) al cache recibe dos parametros, la key request y el response actualizado
   return cache.put(request, response)
 }
 ```
+recuerda revisar en las dev tools de chrome en la parte de aplication donde tendremos el service worker, de ahi nos vamos a la opcion de <strong>cache Storage</strong> y revisamos la version que creamos, en ella deberiamos tener todos los archivos que mandamos a cachear.
+
 <br>
 <div align="right">
   <small><a href="#tabla-de-contenido">🡡 volver al inicio</a></small>
