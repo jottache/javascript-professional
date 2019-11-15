@@ -1550,7 +1550,7 @@ function* simpleGenerator() {
 const gen = simpleGenerator();
 ```
 
-Los generadores que se crean traen una función que se llama next(), es una forma de decirle al generador "continua tu ejecucíon" porque ahora esta suspendido, si hacemos next, escribira el generador en consola. Pero también regresa un objeto con los valores [value: undefine, y done: true], este es el valor de retorno del generador. Cuando donde es true quiere decir que el generador termino su ejecución.
+Los generadores que se crean traen una función que se llama next(), es una forma de decirle al generador "continua tu ejecucíon" porque ahora esta suspendido, si hacemos next, escribira el generador en consola. Pero también regresa un objeto con los valores {value: undefine, y done: true}, este es el valor de retorno del generador. Cuando donde es true quiere decir que el generador termino su ejecución.
 
 Para obtener value definido podemos utilizar un keyword que se llama yield(seder) y si ejecutamos next el yield cortara la ejecución y ahi terminará la ejecución y si queremos volver a ejecutar las instrucciones pendientes tenemos que volver a lanzar a next().
 
