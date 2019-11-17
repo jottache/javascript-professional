@@ -2117,15 +2117,18 @@ function createAdder(a: number): (number) => number {
 const addFour = createAdder(4);
 const fourPlus6 = addFour(6);
 
+//en ts si le pasamos parametros a una funcion estos deben llegar estrictamente
+//si queremos que uno o mas de los parametros de una funcion sean opcionales le agregamos un "?" al final del nombre del parametro
 function fullName(firtsName: string, lastName?: string): string {
   return `${firtsName} ${lastName}`;
 }
 const jasan = fullName('Jasan');
 
+// tambien podemos pasarle el valor del parametro directamente
 function fullValue(firtsName: string = "Pepe", lastName: string = "Smith"): string {
   return `${firtsName} ${lastName}`;
 }
-const person = fullValue();
+const person = fullValue(); //pepe smith
 ```
 <br>
 <div align="right">
@@ -2135,6 +2138,38 @@ const person = fullValue();
 ### Interfaces en Typescript
 
 Las interfaces nos permiten declarar la forma que tiene un objeto, esto puede ser útil, porque nos ayuda en autocompletado y evitar cometer algunos erroes.
+
+Uno de los principios centrales de TypeScript es que la verificación de tipos se centra en la forma que tienen los valores. Esto a veces se llama “tipificación de pato” o “subtipo estructural”. En TypeScript, las interfaces cumplen la función de nombrar estos tipos y son una forma poderosa de definir contratos dentro de su código, así como contratos con código fuera de su proyecto.
+
+La forma más fácil de ver cómo funcionan las interfaces es comenzar con un ejemplo simple:
+
+```ts
+function printLabel (labeledObj: { label: string }) {
+    console.log(labeledObj.label);
+}
+
+let myObj = {size: 10, label: "Size 10 Object"};
+printLabel(myObj);
+
+```
+El verificador de tipos verifica la llamada a printLabel. La printLabelfunción tiene un único parámetro que requiere que el objeto pasado tenga una propiedad llamada labelde tipo string. Tenga en cuenta que nuestro objeto en realidad tiene más propiedades que esto, pero el compilador solo verifica que al menos las requeridas estén presentes y coincidan con los tipos requeridos. Hay algunos casos en que TypeScript no es tan indulgente, que cubriremos en un momento.
+
+Podemos escribir el mismo ejemplo nuevamente, esta vez usando una interfaz para describir el requisito de tener la labelpropiedad que es una cadena:
+```ts
+interface LabeledValue {
+    label: string;
+}
+
+function printLabel (labeledObj: LabeledValue) {
+    console.log(labeledObj.label);
+}
+
+let myObj = {size: 10, label: "Size 10 Object"};
+printLabel(myObj);
+```
+La interfaz LabeledValuees un nombre que ahora podemos usar para describir el requisito en el ejemplo anterior. Todavía representa tener una sola propiedad llamada labelque es de tipo string. Tenga en cuenta que no tuvimos que decir explícitamente que el objeto que pasamos printLabelimplementa esta interfaz como podríamos tener que hacerlo en otros idiomas. Aquí, lo único que importa es la forma. Si el objeto que pasamos a la función cumple con los requisitos enumerados, entonces está permitido.
+
+Vale la pena señalar que el verificador de tipo no requiere que estas propiedades vengan en ningún tipo de orden, solo que las propiedades que requiere la interfaz están presentes y tienen el tipo requerido.
 
 ```ts
 enum Color {
@@ -2151,7 +2186,7 @@ interface Rectangulo {
 let rect: Rectangulo = {
   height: 4,
   width: 3,
-  // color: Color.Verde
+  color: Color.Verde
 }
 
 function area(r: Rectangulo) {
@@ -2163,10 +2198,10 @@ rect.toString = function () {
   return this.color ? `Un rectangulo ${this.color}` : `Un rectangulo`;
 }
 
-console.log(rect.toString());
+console.log(rect.toString()); //un rectangulo verde
 ```
 
-Las interfaces definen la forma exacta que debe tener un objeto, no podemos añadir propiedades de más, ni de menos, en caso de que una propiedad sea opcional, la tenemos que marcar como opcional
+Las interfaces definen la forma exacta que debe tener un objeto, no podemos añadir propiedades de más, ni de menos, en caso de que una propiedad sea opcional, la tenemos que marcar como opcional con "?"
 
 <div align="right">
   <small><a href="#tabla-de-contenido">🡡 volver al inicio</a></small>
@@ -2389,7 +2424,7 @@ Los patrones de diseño son unas técnicas para resolver problemas comunes en el
 
 Un patrón de diseño resulta ser una solución a un problema de diseño. Para que una solución sea considerada un patrón debe poseer ciertas características. Una de ellas es que debe haber comprobado su efectividad resolviendo problemas similares en ocasiones anteriores. Otra es que debe ser reutilizable, lo que significa que es aplicable a diferentes problemas de diseño en distintas circunstancias.
 
-**Sumary**:
+**Sumary**: 
 Los patrones de diseño son como recetas que resuelven problemas que nos enfrentamos frecuentemente en el diseño de software, en especifico, son una solución de un problema dentro de un contexto, y esté contexto no se vale que ocurra una sola vez, tiene que pasar muchas veces. Porque si ocurriera una sola vez, fuera una solución pero no lo podemos categorizar como un patrón de diseño, los patrones de diseño van a resolver problemas dentro de un contexto recurrente.
 
 <div align="right">
