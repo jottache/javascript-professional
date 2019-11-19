@@ -2649,6 +2649,20 @@ Permite el acceso global a dicha instancia mediante un método de clase.
 Declara el constructor de clase como privado para que no sea instanciable directamente.
 Al estar internamente autoreferenciada, en lenguajes como Java, el recolector de basura no actúa.
 
+En esta clase usamos el keyword static para definir Metodos/Propiedasdes de la clase y no de instancia.
+Ejemplo:
+```ts
+class Circle {
+    static pi = 3.14;
+    pi = 3;
+}
+
+Circle.pi; // returns 3.14
+
+let circleObj = new Circle();
+circleObj.pi; // returns 3
+```
+
 <div align="right">
   <small><a href="#tabla-de-contenido">🡡 volver al inicio</a></small>
 </div>
@@ -2699,8 +2713,13 @@ import Singleton from './Singleton';
 const a = Singleton.getInstance();
 const b = Singleton.getInstance();
 
-console.log("¿A es igual a B?", a === b);
+console.log("¿A es igual a B?", a === b); //true
 ```
+Exactamente el ejemplo del modal, si usara el patron singleton para crear el modal de una aplicación en react podría evitar que se duplique? si, exactamente. para mas info revisar este articulo [Managing React modals with singleton component design](https://hackernoon.com/managing-react-modals-with-singleton-component-design-5efdd317295b)
+
+<strong>conclucion</strong>
+El patrón Singleton es uno de los patrones más fáciles de entender, por lo tanto, es un buen punto de partida para familiarizarse con los patrones. Recuerdo que cuando me uní al mundo de JavaScript, estaba un poco molesto porque, debido a la falta de tipeo, el conocimiento sobre los patrones de diseño no sería tan útil como en Java o C ++. Afortunadamente, TypeScript al rescate!
+
 <br>
 <div align="right">
   <small><a href="#tabla-de-contenido">🡡 volver al inicio</a></small>
@@ -2715,6 +2734,8 @@ Los patrones de comportamiento describen no solamente estructuras de relación e
 La variación de la encapsulación es la base de muchos patrones de comportamiento, por lo que cuando un aspecto de un programa cambia frecuentemente, estos patrones definen un objeto que encapsula dicho aspecto. Los patrones definen una clase abstracta que describe la encapsulación del objeto.
 
 Este patrón también se conoce como el patrón de publicación-inscripción o modelo-patrón. Estos nombres sugieren las ideas básicas del patrón, que son: el objeto de datos, que se le puede llamar Sujeto a partir de ahora, contiene atributos mediante los cuales cualquier objeto observador o vista se puede suscribir a él pasándole una referencia a sí mismo. El Sujeto mantiene así una lista de las referencias a sus observadores. Los observadores a su vez están obligados a implementar unos métodos determinados mediante los cuales el Sujeto es capaz de notificar a sus observadores suscritos los cambios que sufre para que todos ellos tengan la oportunidad de refrescar el contenido representado. De manera que cuando se produce un cambio en el Sujeto, ejecutado, por ejemplo, por alguno de los observadores, el objeto de datos puede recorrer la lista de observadores avisando a cada uno. Este patrón suele utilizarse en los [entornos de trabajo](https://es.wikipedia.org/wiki/Framework) de interfaces gráficas orientados a objetos, en los que la forma de capturar los eventos es suscribir listeners a los objetos que pueden disparar eventos.
+
+un ejemplo de uso de observer podria ser una suscripcion aun blog de contenido de manera que cuando existe una actualizacion este se le notificara a todos los suscritos. en este caso tenemos el sujeto que seria el blog y el observador que serian sus suscriptores
 
 <div align="right">
   <small><a href="#tabla-de-contenido">🡡 volver al inicio</a></small>
@@ -3217,7 +3238,62 @@ let field = new Field(document.querySelector("#email"));
 RequireFieldDecorator(field);
 EmailFieldDecorator(RequireFieldDecorator(field));
 ```
+<strong>Array.prototype.pop()</strong>
+El método **pop()** elimina el último elemento de un array y lo devuelve. Este método cambia la longitud del array.
+Sintaxis:
+```js
+arr.pop()
+```
+<strong>Valor devuelto</strong>
+El elemento que ha sido eliminado del array; undefined si el array está vacío.
 
+<strong>descripcion</strong>
+El método pop elimina el último elemento de un array y devuelve su valor al método que lo llamó.
+
+pop es intencionadamente genérico; este método puede ser called o applied en objectos similares a un array. En objetos que no contengan una propiedad length, que refleje su forma en una serie de propiedades numéricas consecutivas en base cero, puede no comportarse de manera significativa.
+
+Si se llama a pop() en un array vacío, devuelve undefined.
+
+<strong>ejemplo</strong>
+Eliminando el último elemento de un array.
+El siguiente código crea el array myFish, que contiene cuatro elementos, a continuación, elimina su último elemento.
+```js
+var myFish = ['angel', 'clown', 'mandarin', 'sturgeon'];
+
+var popped = myFish.pop();
+
+console.log(myFish); // ['angel', 'clown', 'mandarin' ] 
+
+console.log(popped); // 'sturgeon'
+```
 ## Publicar en NPM
 
 Para publicar en npm hay un requisito: necesitas una cuenta en npm, es gratis no cuesta nada, es muy fácil de hacer y esto es todo lo que vas a necesitar 
+
+-Paso 1: npm actualizado
+Tener npm instalado y actualizado en tu sistema. Si no está actualizado ejecuta:
+
+npm install npm@latest -g
+
+Fuente: https://docs.npmjs.com/getting-started/installing-node
+
+-Paso 2: github
+Tener tu proyecto en Github. No obligatorio pero recomendable. Recuerda que solo puedes publicar gratis paquetes públicos. Para paquetes privados deberás sacar la tarjeta de crédito.
+
+-Paso 3: package.json
+Tu proyecto debe tener un archivo package.json en el directorio raíz. Si no lo tuviera, ejecuta npm init desde la consola y sigue los pasos.
+
+-Paso 4: tu cuenta en npmjs.com
+Ve a npmjs.com y crea una cuenta. Una vez creada tu cuenta no encontrarás ningún botón de subir proyecto, así que no pierdas tiempo buscándolo (como yo).
+
+-Paso 5: publicar el proyecto
+Ahora que tienes tu cuenta, ve a tu proyecto en local con la terminal y ejecuta:
+
+npm login
+// ingresa tus datos de usuario y contraseña de npmjs.com
+para saber si estas logeado usa:
+npm whoami
+
+Una vez que has iniciado sesión es tan simple como ejecutar:
+
+npm publish
